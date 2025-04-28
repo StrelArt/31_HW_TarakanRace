@@ -3,13 +3,13 @@ package telran.tarakanrace;
 public class TarakanRaceImpl implements Runnable {
     private int name;
     private int distance;
+    private static volatile int winner = -1;
 
     public TarakanRaceImpl(int name, int distance) {
         this.name = name;
         this.distance = distance;
     }
 
-    private static volatile boolean isWinner = false;
 
     @Override
     public void run() {
@@ -24,12 +24,13 @@ public class TarakanRaceImpl implements Runnable {
             }
 
         }
-        if (!isWinner) {
-            isWinner = true;
-            System.out.println("Tarakan " + name + " has won the race!");
-
-        } else {
-            System.out.println("Tarakan " + name + " has finished the race.");
+        if (winner == -1) {
+            winner = name;
         }
     }
+
+    public static int getWinner() {
+        return winner;
+    }
+
 }

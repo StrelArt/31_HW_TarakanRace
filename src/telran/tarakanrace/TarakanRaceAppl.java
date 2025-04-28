@@ -12,11 +12,19 @@ public class TarakanRaceAppl {
         System.out.println("Enter the distance");
         int distance = scanner.nextInt();
 
-        Runnable[] tasks = new Runnable[number];
-        for (int i = 0; i < tasks.length; i++) {
-            tasks[i] = new TarakanRaceImpl(i, distance);
-            Thread thread = new Thread(tasks[i]);
-            thread.start();
+        Thread[] threads = new Thread[number];
+        for (int i = 0; i < threads.length; i++) {
+            Runnable task = new TarakanRaceImpl(i, distance);
+            threads[i] = new Thread(task);
+            threads[i].start();
         }
+
+        for (Thread thread : threads) {
+            thread.join();
+        }
+
+        System.out.println("Congratulations to Tarakan #" + TarakanRaceImpl.getWinner() + "! He has won the race!");
+
+
     }
 }
