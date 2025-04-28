@@ -1,9 +1,10 @@
 package telran.tarakanrace;
 
 public class TarakanRaceImpl implements Runnable {
+    private static Object monitor = new Object();
     private int name;
     private int distance;
-    private static volatile int winner = -1;
+    private static int winner = -1;
 
     public TarakanRaceImpl(int name, int distance) {
         this.name = name;
@@ -24,10 +25,11 @@ public class TarakanRaceImpl implements Runnable {
             }
 
         }
+        synchronized (monitor){
         if (winner == -1) {
             winner = name;
         }
-    }
+    }}
 
     public static int getWinner() {
         return winner;
